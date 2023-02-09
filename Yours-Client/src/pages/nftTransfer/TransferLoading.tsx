@@ -1,0 +1,21 @@
+import { ReactComponent as LoadingIcon } from '../../asset/svg/loading.svg';
+
+type transferLoadingProp = {
+    nftName:string;
+}
+
+function TransferLoading({ nftName }:transferLoadingProp) {
+    return (
+        <div className="trasfer-status-container">
+            <LoadingIcon className="loading-icon"/>
+            <div className="transfer-status-wrapper">
+                <h2 className="eng">{ nftName }</h2>
+                <h3>NFT를<br/>전송하는 중이에요</h3>
+            </div>
+
+            <h5>지금 지갑으로 전송해도<br/>Yours 마이페이지에서 계속 확인할 수 있어요.</h5>
+            <h6 className="transfer-warning">네트워크 환경에 따라 시간이 소요될 수 있습니다.</h6>
+        </div>
+    )
+}
+export default TransferLoading;

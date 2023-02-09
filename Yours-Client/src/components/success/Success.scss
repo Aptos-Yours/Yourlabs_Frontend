@@ -1,0 +1,47 @@
+@import '../../style/var.scss';
+
+.success-page {
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+
+    .success-page-content-wrapper {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .success-page-first-title {
+        @include set-vw(margin-bottom, 40px); 
+
+        b {
+            font-family: 'MADE Okine Sans PERSONAL USE';
+        }
+    }
+
+    .success-page-image {
+        @include set-vw(width, 195px); 
+        @include set-vw(height, 195px); 
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .success-page-text {
+        color: $GN;
+        @include set-vw(margin-top, 65px); 
+        @include set-vw(margin-bottom, 23px); 
+        @include H2(eng);
+    }
+
+    .success-page-title {
+        font-weight: 500;
+        @include set-vw(font-size, 20px); 
+        @include set-vw(line-height, 25px); 
+
+        b {
+            font-family: 'MADE Okine Sans PERSONAL USE';
+        }
+    }
+}
