@@ -1,4 +1,5 @@
 @import './var.scss';
+@import './active.scss';
 
 /* init */
 html {
@@ -6,6 +7,12 @@ html {
     -ms-touch-action: pan-x pan-y;
     background-color: $GR-0;
     transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+    -moz-transition: background-color 0.3s;
+
+    // * {
+    //     color: white;
+    // }
 }
 
 body {
@@ -20,9 +27,12 @@ body {
     -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
     font-weight: 400;
     background-color: $GR-0;
-    background: $GR-0;
+    background-repeat: repeat;
+    @include set-vw(background-size, 430px);
     @include set-vw(font-size, 11px);
 }
+
+iframe { display: none; }
 
 .App {
     text-align: center;
@@ -30,11 +40,11 @@ body {
     min-height: 100vh;
     margin-left: auto;
     margin-right: auto;
-    background: $GR-0;
     color: #FFFFFF;
     position: relative;
     display: flex;
     flex-direction: column;
+    // overflow: hidden;
 }
 
 .App > .app-content {
@@ -71,6 +81,29 @@ button {
     background: transparent;
 }
 button:focus-visible { outline: none; }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {     
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+    border: 0;
+    background-color: transparent !important;
+    color: white !important;
+	-webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px $GR-0 inset;
+    box-shadow: 0 0 0px 1000px $GR-0 inset;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-transition: background-color 5000s ease-in-out 0s;
+    -moz-transition: background-color 5000s ease-in-out 0s;
+}
 
 ::selection {
     background-color: #4A46FF30;
@@ -191,15 +224,16 @@ h6 {
     width: -webkit-fill-available;
     color: white;
     font-weight: 500;
-    @include set-vw(font-size, 17px);
+    @include set-vw(font-size, 16px);
     @include set-vw(border-radius, 15px);
     @include set-vw(padding, 20px);
-    @include button-active-scale;
+    @include active-scale;
 
     &#purple { background-color: $PU; }
     &#black { background-color: $BK; }
-    &#green { background-color: $GN; color: $BK; }
+    &#green { background-color: $GN; color: $BK !important; }
     &#red { background-color: $RE; }
+    &#white { background-color: white; color: $BK !important; }
     &:disabled { background-color: $GR-2 !important; }
 
     &.button--sticky {
@@ -209,5 +243,17 @@ h6 {
 }
 
 .show-content-smoothly {
+    width: -webkit-fill-available;
     @include show-down(1.5s);
+}
+
+.is-loading {
+    img,
+    .loading-elem {
+        background: rgb(22, 22, 22);
+        background: linear-gradient(110deg, #333333 8%, #383838 18%, #333333 33%);
+        border-radius: 5px;
+        background-size: 200% 100%;
+        animation: 1.5s shine linear infinite;
+    }
 }

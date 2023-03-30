@@ -2,12 +2,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNft } from "../../hook/useNft";
+import { setShowAlertInfo } from "../../utils/function/showAlert";
+import { chainType } from "ChainType";
+import chainList from "../../utils/data/chainList";
+import NFTApi from "../../apis/NftApi";
 import MiniHeader from "../../components/miniHeader/MiniHeader";
 import TransferInput from "./TrasferInput";
 import TransferLoading from "./TransferLoading";
 import TransferComplete from "./TransferComplete";
 import './index.scss';
-import NFTApi from "../../apis/NftApi";
 
 type transferStatusType = 'INPUT'|'LOADING'|'COMPLETE';
 
@@ -32,6 +35,7 @@ function NftTransfer() {
                 return <TransferInput
                     nftImage={nftInfo?.image}
                     nftName={nftInfo?.nftName}
+                    nftChainType={nftInfo?.chainType as chainType}
                     transferNft={transferNft}
                 />;
             case 'LOADING':
@@ -41,6 +45,7 @@ function NftTransfer() {
             case 'COMPLETE':
                 return <TransferComplete 
                     nftName={nftInfo?.nftName}
+                    transactionExplorerUrl={chainList.find(el=>el.name===nftInfo?.chainType)?.explorerUrl}
                     transactionId={txId}
                 /> 
         }
@@ -48,12 +53,14 @@ function NftTransfer() {
 
     const transferNft = async (address:string) => {
         setTransferStatus('LOADING');
-        const res = await nftApi.transferNft(Number(nftId), address);
-        setTxId(res);
-        // const timer = setTimeout(()=>{
-        //     setTransferStatus('COMPLETE');
-        // }, 4000);
-        setTransferStatus('COMPLETE');
+        try {
+            const res = await nftApi.transferNft(Number(nftId), address);
+            setTxId(res.transactionHash);
+            setTransferStatus('COMPLETE');
+        } catch(err) {
+            setShowAlertInfo('NFT 전송에 실패했습니다.\n다시 시도해주세요.', false);
+            setTransferStatus('INPUT');
+        }
     }
 
     return (

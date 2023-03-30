@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .nft-detail-page {
     .header-icon-wrapper {
@@ -7,6 +8,10 @@
         display: flex;
         align-items: center;
         @include set-vw(gap, 10px);
+
+        .nft-detail-admin {
+            @include active-rotate;
+        }
 
         svg {
             @include set-vw(width, 24px);
@@ -24,7 +29,6 @@
         @include set-vw(margin-bottom, 50px);
         
         .nft-image {
-            background: $GR-2;
             object-fit: cover;
             filter: drop-shadow(0px 4px 20px rgba(92, 54, 238, 0.1));
             @include set-vw(width, 205px);
@@ -50,8 +54,10 @@
                 }
 
                 &.nft-owner {
-                    color: $BK;
                     background-color: $GN;
+                    b, span {
+                        color: $BK;
+                    }
                 }
 
                 &.nft-share {
@@ -132,5 +138,26 @@
     .get-nft-button {
         position: sticky;
         bottom: 2vh;
+    }
+
+    .nft-info-wrapper {
+        width: 100%;
+        .nft-info-row {
+            width: 100%;
+            display: flex;
+            @include set-vw(gap, 100px);
+            @include H6;
+
+            .title {
+                flex-shrink: 0;
+                text-align: left;
+            }
+
+            .content {
+                flex-grow: 1;
+                text-align: right;
+                @include overFlowText(1);
+            }
+        }
     }
 }

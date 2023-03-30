@@ -1,9 +1,25 @@
+@import './var.scss';
+@import './transform.scss';
+
 @keyframes glitter {
     0% {opacity: 1;}
     25% {opacity: 0.5;}
     50% {opacity: 1;}
     75% {opacity: 0.5;}
     100% {opacity: 1;}
+}
+
+@keyframes hideModal {
+    0% {opacity: 1; transform: translateY(0);}
+    100% {opacity: 0; transform: translateY(-1vh);}
+}
+@-webkit-keyframes hideModal {
+    0% {opacity: 1; transform: translateY(0);}
+    100% {opacity: 0; transform: translateY(-1vh);}
+}
+@-moz-keyframes hideModal {
+    0% {opacity: 1; transform: translateY(0);}
+    100% {opacity: 0; transform: translateY(-1vh);}
 }
 
 @keyframes showModal {
@@ -20,16 +36,16 @@
 }
 
 @keyframes showDown {
-    0% {opacity: 0; transform: translateY(-2vh);}
-    100% {opacity: 1; transform: translateY(0);}   
+    0% {opacity: 0; @include transform(translateY(-2vh));}
+    100% {opacity: 1; @include transform(translateY(0));}   
 }
 @-webkit-keyframes showDown {
-    0% {opacity: 0; transform: translateY(-2vh);}
-    100% {opacity: 1; transform: translateY(0);}   
+    0% {opacity: 0; @include transform(translateY(-2vh));}
+    100% {opacity: 1; @include transform(translateY(0));}   
 }
 @-moz-keyframes showDown {
-    0% {opacity: 0; transform: translateY(-2vh);}
-    100% {opacity: 1; transform: translateY(0);}   
+    0% {opacity: 0; @include transform(translateY(-2vh));}
+    100% {opacity: 1; @include transform(translateY(0));}   
 }
 
 @keyframes showFade {
@@ -87,6 +103,22 @@
     100% {opacity: 1;}   
 }
 
+@keyframes showBounceDown {
+    0% {opacity: 0; transform: translateY(-3vh);}
+    80% {transform: translateY(1vh);}
+    100% {opacity: 1;}   
+}
+@-webkit-keyframes showBounceDown {
+    0% {opacity: 0; transform: translateY(-3vh);}
+    80% {transform: translateY(1vh);}
+    100% {opacity: 1;}   
+}
+@-moz-keyframes showBounceDown {
+    0% {opacity: 0; transform: translateY(-3vh);}
+    80% {transform: translateY(1vh);}
+    100% {opacity: 1;}   
+}
+
 @keyframes moveLeft {
     100% {transform: translateX(-50%);}
 }
@@ -103,4 +135,36 @@
 
 @keyframes shinyStar {
     0% { opacity: 0; transform: rotate(90deg); }
+}
+
+@keyframes bounceSpace {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-1vh); }
+    100% { transform: translateY(0); }
+}
+@-webkit-keyframes bounceSpace {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-1vh); }
+    100% { transform: translateY(0); }
+}
+@-moz-keyframes bounceSpace {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-1vh); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
+}
+@-webkit-keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
+}
+@-moz-keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
 }

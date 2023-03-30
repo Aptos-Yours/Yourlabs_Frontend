@@ -12,10 +12,22 @@ export const setTransferNftIdList = (nftList : number[]) => {
     return {type: ACTION_TYPES.SET_TRANSFER_NFT_LIST, data: nftList};
 }
 
-export const addOwnNft = (badgeId : number) => {
-    return {type: ACTION_TYPES.ADD_OWN_NFT, data: badgeId};
+export const setIntegratedNftList = (nftList : any[]) => {
+    return {type: ACTION_TYPES.SET_INTEGRATED_NFT_LIST, data: nftList};
 }
 
-export const addCreateNft = (badgeId : number) => {
-    return {type: ACTION_TYPES.ADD_CREATE_NFT, data: badgeId};
+export const addOwnNft = (nftId : number) => {
+    return {type: ACTION_TYPES.ADD_OWN_NFT, data: nftId};
+}
+
+export const addCreateNft = (nftId : number) => {
+    return {type: ACTION_TYPES.ADD_CREATE_NFT, data: nftId};
+}
+
+export const addTransferNft = (nftId : number) => {
+    return {type: ACTION_TYPES.ADD_TRANSFER_NFT, data: nftId};
+}
+
+export const addIntegratedNft = (nftInfo : any) => {
+    return {type: ACTION_TYPES.ADD_INTEGRATED_NFT, data: nftInfo};
 }

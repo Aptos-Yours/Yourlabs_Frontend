@@ -56,6 +56,7 @@ function PhoneEditModal({ closeModal }:phoneEditModalProps) {
                             placeholder="변경할 휴대폰 번호 입력"
                             value={phoneNumber}
                             maxLength={13}
+                            autoFocus={true}
                             onChange={(e)=>{getPhoneNumber(e.target as HTMLInputElement)}}
                         />
                         <button

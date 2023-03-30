@@ -1,4 +1,5 @@
 @import '../../../style/var.scss';
+@import '../../../style/active.scss';
 
 .nft-setting-reward {
     .title {
@@ -19,6 +20,7 @@
         flex-direction: column;
         min-height: 50vh;
         @include set-vw(gap, 20px);
+        @include set-vw(margin-bottom, 50px);
 
         .nft-reward-elem {
             width: -webkit-fill-available;
@@ -71,12 +73,21 @@
             @include set-vw(gap, 4px);
             @include set-vw(border-radius, 30px);
             @include set-pair-vw(padding, 12px, 20px);
-            @include button-active-scale;
+            @include active-scale;
 
             svg {
                 @include set-vw(width, 24px);
                 @include set-vw(height, 24px);
             }
+        }
+    }
+
+    .deploy-button-wrapper {
+        position: sticky;
+        @include set-vw(bottom, 30px);
+
+        .deploy-button-message {
+            @include set-vw(margin-bottom, 20px);
         }
     }
 }

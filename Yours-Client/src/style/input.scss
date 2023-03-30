@@ -20,7 +20,7 @@
         padding: 0;
         white-space: pre-wrap;
         word-break: break-all;
-        transition: 0.3s;
+        @include transition;
         @include set-vw(padding-bottom, 6px);
         @include set-vw(font-size, 20px);
 
@@ -66,6 +66,7 @@
         width: -webkit-fill-available;
         display: flex;
         @include set-vw(border-radius, 20px);
+        @include set-vw(margin-top, 12px);
         @include set-vw(gap, 5px);
 
         svg {
@@ -100,7 +101,7 @@
         color: $GR-4;
         @include set-vw(margin-top, 10px);
         @include set-vw(font-size, 13px);
-        transition: 0.2s;
+        @include transition(0.2s);
 
         #active { color: white; }
         #max { color: $RE; }
@@ -127,7 +128,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.3s;
+            @include transition;
 
             &#image-uploaded {
                 opacity: 0;

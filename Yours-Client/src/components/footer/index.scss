@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .page-footer {
     white-space: pre-wrap;
@@ -17,6 +18,15 @@
         line-height: 165%;
     }
 
+    .service-guide-link {
+        background: $PU;
+        color: white;
+        @include H6;
+        @include set-vw(border-radius, 20px);
+        @include set-pair-vw(padding, 10px, 10px);
+        @include active-scale;
+    }
+    
     .contact-link-wrapper {
         display: flex;
         align-items: center;

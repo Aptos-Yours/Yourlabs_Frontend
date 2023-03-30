@@ -14,8 +14,8 @@ export const useNftPhotoAdmin = ({ nftId }:useNftPhotoAdminProp) => {
         setNftAdminPhotoList(nftAdminPhotoList.filter((el:any)=>el.id!==applicationId));
     }
 
-    const discardApplication = async (applicationId:number) => {
-        await adminApi.approveNftAdminPhoto(applicationId, false);
+    const discardApplication = async (applicationId:number, reason:string) => {
+        await adminApi.approveNftAdminPhoto(applicationId, false, reason);
         setNftAdminPhotoList(nftAdminPhotoList.filter((el:any)=>el.id!==applicationId));
     }
 

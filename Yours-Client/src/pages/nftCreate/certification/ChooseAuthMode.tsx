@@ -10,7 +10,7 @@ function ChooseAuthMode ({ setToPhoto, setToEmail }:chooseAuthModeProp) {
     return (
         <>
         <div className="title-wrapper">
-            <h2 className="title">마지막으로 NFT를 받아가기 위한<br/> 인증 방법을 선택해주세요. (4/4)</h2>
+            <h2 className="title">마지막으로 NFT를 받아가기 위한<br/> 인증 방법을 선택해주세요. (5/5)</h2>
         </div>
         <div className="certification-button-wrapper">
             <button className="button" type="button" id="black"

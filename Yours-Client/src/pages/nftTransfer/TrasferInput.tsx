@@ -1,32 +1,43 @@
+import { chainType } from "ChainType";
 import { useEffect, useState } from "react";
-import Web3 from 'web3';
+import { useCheckAddressValidation } from "../../hook/useCheckAddressValidation";
+import ChainTextIcon from "../../components/chain/ChainTextIcon";
 
 type trasferInputType = {
     nftImage:string;
     nftName:string;
+    nftChainType:chainType;
     transferNft:Function;
 }
+type chainTextType = {
+    chainId: string; 
+    walletName: string; 
+    walletNameEng: string; 
+    placeHolder: string
+}
 
-function TransferInput({ nftImage, nftName, transferNft }:trasferInputType) {
-    const [walletAddress, setWalletAddress] = useState('');
-    const [validAddress, setValidAddress] = useState(false);
+function TransferInput({ nftImage, nftName, nftChainType, transferNft }:trasferInputType) {
+    const { address, setAddress, isValid, isYoursWallet } = useCheckAddressValidation(nftChainType as chainType)
+    const [currChainText, setCurrChainText] = useState<chainTextType>({ chainId: '', walletName: '', walletNameEng: '', placeHolder: '' });
+    const chainTextList = [
+        { chainId: 'Ethereum', walletName: '메타마스크', walletNameEng: 'Metamask', placeHolder: 'Ex. 0xB5D... (ENS 주소는 지원되지 않습니다)' },
+        { chainId: 'Polygon', walletName: '메타마스크', walletNameEng: 'Metamask', placeHolder: 'Ex. 0xB5D... (ENS 주소는 지원되지 않습니다)' },
+        { chainId: 'Klaytn', walletName: '메타마스크 또는 카이카스', walletNameEng: 'Metamask 또는 Kaikas', placeHolder: 'Ex. 0xB5D... (ENS 주소는 지원되지 않습니다)' },
+        { chainId: 'Solana', walletName: '팬텀', walletNameEng: 'Phantom', placeHolder: 'Ex. 9noqY...' },
+        { chainId: 'Aptos', walletName: '페트라 또는 마션', walletNameEng: 'Petra 또는 Martion', placeHolder: 'Ex. 0xbd4...' },
+    ]
 
     useEffect(()=>{
-        try {
-            Web3.utils.toChecksumAddress(walletAddress);
-            setValidAddress(true);
-        } catch(err) {
-            setValidAddress(false);
-        }
-
-    }, [walletAddress])
+        setCurrChainText(chainTextList.find(el=>el.chainId===nftChainType) as chainTextType);
+    }, [nftChainType])
 
     return (
-        <form onSubmit={(e)=>{e.preventDefault(); transferNft(walletAddress)}}>
+        <form onSubmit={(e)=>{e.preventDefault(); transferNft(address)}}>
             <div className="title-wrapper">
                 <h2 className="title">어디로 이 NFT를 옮겨갈까요?</h2>
                 <h5 className="subtitle">
-                    <span className="white">메타마스크 지갑을 가지고 있을 경우</span> NFT를 지갑으로 옮겨갈 수 있어요. 지갑으로 전송한 이후에도 <span className="white">마이페이지</span>에서 확인할 수 있습니다.
+                    <span className="white">{ currChainText?.walletName } 지갑을 가지고 있을 경우</span><br/> 
+                    NFT를 지갑으로 옮겨갈 수 있어요.
                 </h5>
             </div>
         
@@ -34,18 +45,25 @@ function TransferInput({ nftImage, nftName, transferNft }:trasferInputType) {
                 className="nft-image"
                 src={nftImage}
             />
+            <div className="nft-chain-info">
+                <ChainTextIcon chainType={nftChainType}/>
+            </div>
             <div className="input-box-wrapper">
-                <label className="input-label">메타마스크(Metamask) 지갑 주소</label>
+                <label className="input-label">{ currChainText?.walletNameEng } 지갑 주소</label>
                 <input 
                     className="input-textbox"
-                    value={walletAddress}
-                    placeholder="Ex. 0xB5D... (ENS 주소는 지원되지 않습니다)"
-                    onChange={(e)=>{setWalletAddress(e.currentTarget.value)}}
+                    value={address}
+                    placeholder={currChainText?.placeHolder}
+                    onChange={(e)=>{setAddress(e.currentTarget.value)}}
                 />
                 {
-                    !!(walletAddress.length) &&
+                    !!(address.length) &&
                     (
-                        !validAddress &&
+                        isYoursWallet
+                        ? <div className="input-status" id="warning">
+                            유얼스 지갑으로 옮겨가는 기능은 현재 지원되지 않습니다.
+                        </div>
+                        : !isValid && 
                         <div className="input-status" id="warning">
                             유효하지 않은 주소입니다.
                         </div>
@@ -56,9 +74,9 @@ function TransferInput({ nftImage, nftName, transferNft }:trasferInputType) {
             <div className="transfer-preview">
                 <b>{ nftName }</b> 이<br/>
                 {
-                    walletAddress.length
+                    address.length
                     ? <span className="transfer-wallet-address">
-                        { walletAddress }
+                        { address }
                     </span>
                     : '...'
                 }
@@ -72,7 +90,7 @@ function TransferInput({ nftImage, nftName, transferNft }:trasferInputType) {
             <button
                 className="button button--sticky"
                 id="purple"
-                disabled={!validAddress}
+                disabled={!isValid}
             >
                 전송하기
             </button>

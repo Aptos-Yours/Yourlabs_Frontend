@@ -6,17 +6,32 @@ import { ReactComponent as MoreView } from "../../asset/svg/three-dots.svg";
 import { ReactComponent as SendIcon } from "../../asset/svg/send.svg";
 import { ReactComponent as CopyIcon } from "../../asset/svg/copy.svg";
 import './NftElem.scss';
+import { useEffect, useRef, useState } from "react";
+import NftElemLoading from "./NftElemLoading";
 
 type nftElemProps = {
     nftInfo:NftInfo
 }
 
 function NftElem ({ nftInfo }:nftElemProps) {
+    const [loading, setLoading] = useState(true);
     const ownNftIdList = useSelector((state:any)=>state.nft.ownNftIdList);
     const navigation = useNavigate();
 
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false);
+        }, 2000)
+    }, [])
+
     return (
-        <div className="nft-elem-wrapper">
+        <>
+        {
+            loading
+        ? <NftElemLoading />
+        : <div 
+            className="nft-elem-wrapper"
+        >
             <div onClick={()=>{navigation(`/nft/${nftInfo.id}/detail`)}}>
                 <img className="nft-image" src={nftInfo.image}/>
                 <div className="nft-elem-body">
@@ -51,6 +66,8 @@ function NftElem ({ nftInfo }:nftElemProps) {
                 </button>
             </div>
         </div>
+        }
+        </>
     )
 }
 export default NftElem;

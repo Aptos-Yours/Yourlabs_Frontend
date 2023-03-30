@@ -8,7 +8,6 @@ const nftApi = new NFTApi();
 
 const ownerCheck = async ({ nftId }:any) => {
     const res = await nftApi.getUserCreateNftIdList();
-    console.log(res);
     if (res.includes(Number(nftId))) {
         // owner라면,
         return true;

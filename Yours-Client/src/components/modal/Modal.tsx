@@ -1,16 +1,26 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Transition, CSSTransition } from 'react-transition-group';
 import './Modal.scss';
 
 type modalProps = {
     closeModal: Function,
-    children: JSX.Element
+    children: JSX.Element,
+    align?: 'CENTER' | 'LEFT' | 'RIGHT' | 'BOTTOM',
 }
 
-function Modal({ closeModal, children } : modalProps) {
+function Modal({ closeModal, children, align='CENTER' } : modalProps) {
     const modalRef = useRef<any>(null);
+    const [show, setShow] = useState(true);
+
+    const closeThisModal = () => {
+        setShow(false);
+        setTimeout(() => {
+            closeModal();
+        }, 500);
+    }
 
     const clickModalOutside = (e : any) => {
-        if(e.target == modalRef.current) closeModal();
+        if(e.target == modalRef.current) closeThisModal();
     }
 
     useEffect(()=>{
@@ -24,11 +34,32 @@ function Modal({ closeModal, children } : modalProps) {
     }, [modalRef.current])
 
     return (
-        <div className="modal" ref={modalRef}>
-            <div style={{display: "contents"}}>
-                { children }
-            </div>
-        </div>
+        <CSSTransition
+            timeout={500}
+            in={show}
+            nodeRef={modalRef}
+            // in={show}
+            // appear={true}
+            onEntering={()=>console.log("entering")}
+            onEnter={()=>console.log("enter")}
+            onExit={()=>console.log("exit")}
+            onExited={()=>console.log("hi")}
+        >
+            {
+                (status)=>(
+                    <div 
+                        ref={modalRef}
+                        className= {`modal modal-${status}`}
+                        id={align}
+                    >
+                        <div style={{display: "contents"}}>
+                            { children }
+                        </div>
+                    </div>
+                )
+            }
+
+        </CSSTransition>
     )
 }
 export default Modal;

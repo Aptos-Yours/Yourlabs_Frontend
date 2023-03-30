@@ -17,6 +17,20 @@
     @include set-vw(padding-left, 18px);
     @include set-vw(padding-right, 18px);
 
+    &.is-loading {
+        background-color: $GR-2;
+
+        .nft-name {
+            @include set-vw(margin-bottom, 5px);
+            @include set-vw(width, 100px);
+            @include set-vw(height, 20px);
+        }
+
+        .reward-name {
+            @include set-vw(height, 25px);
+        }
+    }
+
     .nft-reward-info-wrapper {
         max-width: 75%;
         flex-grow: 1;
@@ -41,7 +55,7 @@
         background: $PU;
         color: white;
         flex-shrink: 0;
-        transition: 0.3s;
+        @include transition;
         @include set-vw(width, 87px);
         @include H5;
 

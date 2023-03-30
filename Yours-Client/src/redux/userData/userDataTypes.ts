@@ -6,7 +6,8 @@ export const DATA_TYPES = {
     email : 'email',
     picture : 'picture',
     phoneNumber : 'phoneNumber',
-    admin : 'admin'
+    admin : 'admin',
+    secret: 'secret',
 }
 
 export const ACTION_TYPES = {
@@ -18,4 +19,5 @@ export const ACTION_TYPES = {
     SET_PHONE_NUMBER : 'SET_PHONE_NUMBER',
     SET_ADMIN : 'SET_ADMIN',
     SET_INTRODUCTION : 'SET_INTRODUCTION',
+    SET_SECRET : 'SET_SECRET',
 }

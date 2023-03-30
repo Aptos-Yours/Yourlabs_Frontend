@@ -6,16 +6,18 @@ import SetBadgeCertification from "./certification/index";
 import SetBadgeInfo from "./SetBadgeInfo";
 import Success from "../../components/success/Success";
 import './index.scss';
+import chainList from "../../utils/data/chainList";
 
 function CreateNft() {
     const nftApi = new NFTApi();
     const navigation = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [badgeName, setBadgeName] = useState("");
-    const [badgeImgUrl, setBadgeImgUrl] = useState("");
-    const [badgeImgFormData, setBadgeImgFormData] = useState(new FormData());
-    const [badgeDescription, setBadgeDescription] = useState("");
-    const [badgeId, setBadgeId] = useState<number>();
+    const [nftName, setNftName] = useState("");
+    const [nftImgUrl, setNftImgUrl] = useState("");
+    const [nftImgFormData, setNftImgFormData] = useState(new FormData());
+    const [nftDescription, setNftDescription] = useState("");
+    const [nftChain, setNftChain] = useState("");
+    const [nftId, setNftId] = useState<number>();
     const [authMode, setAuthMode] = useState<number>(0);
     const [option, setOption] = useState<string>("");
 
@@ -28,13 +30,14 @@ function CreateNft() {
     }, [searchParams])
 
     const makeNFTBadge = async () => {
-        let newBadgeFormdata = badgeImgFormData;
-        newBadgeFormdata.append('nftName', badgeName);
-        newBadgeFormdata.append('description', badgeDescription);
+        let newBadgeFormdata = nftImgFormData;
+        newBadgeFormdata.append('nftName', nftName);
+        newBadgeFormdata.append('description', nftDescription);
         newBadgeFormdata.append('authType', authMode?.toString());
         newBadgeFormdata.append('options', option);
+        newBadgeFormdata.append('chainType', nftChain);
         const res = await nftApi.createNft(newBadgeFormdata);
-        await setBadgeId(res.data.id);
+        await setNftId(res.data.id);
         
         goToCreateBadgeSuccess();
     }
@@ -67,13 +70,15 @@ function CreateNft() {
             {
                 !!(searchParams.get("pageMode") === "SET_BADGE_INFO") &&
                 <SetBadgeInfo 
-                    badgeName={badgeName}
-                    setBadgeName={setBadgeName}
-                    badgeImgUrl={badgeImgUrl}
-                    setBadgeImgUrl={setBadgeImgUrl}
-                    setBadgeImgFormData={setBadgeImgFormData}
-                    badgeDescription={badgeDescription}
-                    setBadgeDescription={setBadgeDescription}
+                    nftName={nftName}
+                    setNftName={setNftName}
+                    nftImgUrl={nftImgUrl}
+                    setNftImgUrl={setNftImgUrl}
+                    setNftImgFormData={setNftImgFormData}
+                    nftDescription={nftDescription}
+                    setNftDescription={setNftDescription}
+                    nftChain={nftChain}
+                    setNftChain={setNftChain}
                     next={goToCheckBadgeInfo}
                 />
             }
@@ -82,12 +87,13 @@ function CreateNft() {
                 <CheckBadgeInfo 
                     badgeInfo={
                         { 
-                            name: badgeName,
-                            image: badgeImgUrl,
-                            description: badgeDescription
+                            name: nftName,
+                            image: nftImgUrl,
+                            description: nftDescription,
                         }
                     }
-                    prev={()=>goToSetBadgeInfo(3)}
+                    chainInfo={chainList.find(el=>el.name===nftChain)}
+                    prev={()=>goToSetBadgeInfo(4)}
                     next={goToSetBadgeCertification}
                 />
             }
@@ -103,10 +109,10 @@ function CreateNft() {
             {
                 !!(searchParams.get("pageMode") === "CREATE_BADGE_SUCCESS") &&
                 <Success 
-                    image={badgeImgUrl}
-                    title={<><b>{badgeName}</b> 인증 NFT<br />생성 완료!</>}
+                    image={nftImgUrl}
+                    title={<><b>{nftName}</b> 인증 NFT<br />생성 완료!</>}
                     buttonText={"생성된 NFT 상세 페이지 가기"}
-                    buttonAction={()=>{navigation(`/nft/${badgeId}/detail`)}}
+                    buttonAction={()=>{navigation(`/nft/${nftId}/detail`)}}
                 />
             }
         </form>

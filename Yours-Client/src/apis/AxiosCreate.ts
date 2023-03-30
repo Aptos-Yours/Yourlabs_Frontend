@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { getRefreshToken } from '../utils/function/tokenHandler';
 
 const apiClient = axios.create({
@@ -10,7 +10,7 @@ const apiClient = axios.create({
 
 // 요청 interceptor 정의
 apiClient.interceptors.request.use(
-    (config:AxiosRequestConfig) => {
+    (config:any) => {
         const token = localStorage.getItem('accessToken');
         config.headers = {
             Authorization: `${token}`

@@ -1,4 +1,5 @@
 @import '../../../style/var.scss';
+@import '../../../style/active.scss';
 
 .modal-wrapper.profile-edit-modal {
     background: rgba(0, 0, 0, 0.8);
@@ -51,12 +52,14 @@
                 @include set-vw(width, 73px);
                 @include set-vw(height, 36px);
                 @include set-vw(border-radius, 5px);
-                @include button-active-scale;
+                flex-shrink: 0;
+                @include active-scale;
             }
 
             input {
                 flex-grow: 1;
                 @include H5;
+                @include set-vw(width, 100px);
             }
 
             .valid-time {
@@ -96,6 +99,7 @@
         button.approve {
             flex-grow: 1;
             background: $GN;
+            color: $BK;
             @include set-vw(width, 146px);
 
             &:disabled {

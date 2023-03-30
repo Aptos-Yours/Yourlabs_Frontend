@@ -7,6 +7,7 @@ import AdminAll from "./AdminAll";
 import AdminDetail from "./AdminDetail";
 import MiniHeader from "../../components/miniHeader/MiniHeader";
 import './index.scss';
+import Loading from "../../components/loading";
 
 function NftAdmin () {
     const navigation = useNavigate();
@@ -15,17 +16,20 @@ function NftAdmin () {
     const { nftAdminPhotoList, approveApplication, discardApplication } = useNftPhotoAdmin({ nftId: Number(nftId) });
     const [searchParams, setSearchParams] = useSearchParams();
     const [applicationId, setApplicationId] = useState(0);
+    const [loading, setLoading] = useState(false);
+
     // popup 관련 변수
     const [showPopup, setShowPopup] = useState(false);
     const [popupProp, setPopupProp] = useState<popupProps>();
 
     useEffect(()=>{
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 0); // scroll 초기화
         const _temp = searchParams.get('id');
         setApplicationId(Number(_temp));
     }, [searchParams])
 
     const approveAction = async (applicationId:number) => {
+        setLoading(true);
         await approveApplication(applicationId);
         setPopupProp({
             closeModal: () => { setShowPopup(false); },
@@ -35,10 +39,11 @@ function NftAdmin () {
         });
         navigation(-1);
         setShowPopup(true);
+        setLoading(false);
     }
 
-    const discardAction = async (applicationId:number) => {
-        await discardApplication(applicationId);
+    const discardAction = async (applicationId:number, reason:string) => {
+        await discardApplication(applicationId, reason);
         setPopupProp({
             closeModal: () => { setShowPopup(false); },
             title: '거절 처리 되었습니다.',
@@ -52,6 +57,9 @@ function NftAdmin () {
 
     return (
         <>
+            {
+                loading && <Loading />
+            }
             {
                 showPopup && popupProp &&
                 <Popup 

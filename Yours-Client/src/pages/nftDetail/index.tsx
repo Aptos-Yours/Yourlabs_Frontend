@@ -1,8 +1,10 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useNft } from "../../hook/useNft";
 import { copyToClipboard } from "../../utils/function/linkShare";
 import { setMetaTags } from "../../utils/function/setMetatags";
+import { setShowAlertInfo } from "../../utils/function/showAlert";
+import { ellipsisMiddle } from "../../utils/function/ellipsisMiddle";
 
 import StatusModal from "../../components/statusModal/StatusModal";
 import MiniHeader from "../../components/miniHeader/MiniHeader";
@@ -16,7 +18,6 @@ import { ReactComponent as CopyIcon } from "../../asset/svg/copy.svg";
 import { ReactComponent as SettingIcon } from "../../asset/svg/setting.svg";
 import { ReactComponent as SendIcon } from "../../asset/svg/send.svg";
 import './index.scss';
-import { setShowAlertInfo } from "../../utils/function/showAlert";
 
 function NftDetail() {
     const navigation = useNavigate();
@@ -91,7 +92,7 @@ function NftDetail() {
                 }
                 {
                     /* 자신이 만든 사진 인증 NFT인 경우에 -> admin 페이지로 갈 수 있도록 */
-                    !!(userCreateThisNft && nftInfo?.authType===2) &&
+                    !!(userCreateThisNft) &&
                     <SettingIcon 
                         className="nft-detail-admin"
                         onClick={()=>{navigation(`/nft/${nftId}/setting`)}}
@@ -132,6 +133,38 @@ function NftDetail() {
                     { nftInfo?.description }
                 </div>
 
+                {
+                        nftInfo?.isDeployed &&
+                <div className="nft-reward-wrapper">
+                    <div className="nft-reward-title-wrapper">
+                        <div className="nft-reward-title">
+                            Info
+                        </div>
+                    </div>
+                        <div className="nft-info-wrapper flex-column-20">
+                            <div className="nft-info-row">
+                                <div className="title">Contract Address</div>
+                                <div className="content"> { ellipsisMiddle(nftInfo.nftAddress as string) }</div>
+                            </div>
+                            {
+                                (nftInfo?.chainType !== 'Solana' && nftInfo?.chainType !== 'Aptos') &&
+                                <div className="nft-info-row">
+                                    <div className="title">Token Standard</div>
+                                    <div className="content">ERC 721</div>
+                                </div>
+                            }
+                            <div className="nft-info-row">
+                                <div className="title">Date</div>
+                                <div className="content">{ new Date(nftInfo?.createdAt as string).toLocaleString() }</div>
+                            </div>
+                            <div className="nft-info-row">
+                                <div className="title">Chain</div>
+                                <div className="content">{ nftInfo?.chainType }</div>
+                            </div>
+                        </div>
+                </div>
+                }
+
                 <div className="nft-reward-wrapper">
                     <div className="nft-reward-title-wrapper">
                         <div className="nft-reward-title">
@@ -156,22 +189,35 @@ function NftDetail() {
                 </div>
             </div>
 
-            <button
-                className="button get-nft-button"
-                id="purple"
-                onClick={()=>getNftModalHandler()}
-                disabled={userOwnThisNft || userPhotoPending}
-            >
-                {
-                    userOwnThisNft
-                    ? "이미 받은 NFT입니다"
-                    : ( 
-                        userPhotoPending
-                        ? "승인 대기중입니다"
-                        : "NFT 받으러 가기"
-                    )
-                }
-            </button>
+            {
+                !!(userCreateThisNft && !nftInfo?.isDeployed)
+                ? <button
+                    className="button get-nft-button"
+                    id="purple"
+                    onClick={()=>{navigation(`/nft/${nftId}/setting/reward`)}}
+                >
+                    혜택 설정하고 NFT 발행하기
+                </button>
+                : (
+                    nftInfo?.isDeployed &&
+                    <button
+                        className="button get-nft-button"
+                        id="purple"
+                        onClick={()=>getNftModalHandler()}
+                        disabled={userOwnThisNft || userPhotoPending}
+                    >
+                        {
+                            userOwnThisNft
+                            ? "이미 받은 NFT입니다"
+                            : ( 
+                                userPhotoPending
+                                ? "승인 대기중입니다"
+                                : "NFT 받으러 가기"
+                            )
+                        }
+                    </button>
+                )
+            }
         </div>
         </>
     )

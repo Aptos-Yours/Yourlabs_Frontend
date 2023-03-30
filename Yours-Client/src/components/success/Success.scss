@@ -3,7 +3,8 @@
 .success-page {
     display: flex;
     flex-direction: column;
-    height: 85vh;
+    min-height: 80vh;
+    @include set-vw(margin-top, 20px);
 
     .success-page-content-wrapper {
         flex-grow: 1;
@@ -11,6 +12,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        @include set-vw(padding-bottom, 50px);
     }
 
     .success-page-first-title {
@@ -37,8 +39,8 @@
 
     .success-page-title {
         font-weight: 500;
+        line-height: 160%;
         @include set-vw(font-size, 20px); 
-        @include set-vw(line-height, 25px); 
 
         b {
             font-family: 'MADE Okine Sans PERSONAL USE';

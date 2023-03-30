@@ -22,6 +22,13 @@ function Footer() {
                 도와주는 서비스입니다. 혜택이 쌓이는 NFT를 발행하고<br/>
                 고객들에게 쉬운 블록체인 온보딩 경험을 선사해보세요.
             </div>
+            <a
+                className="service-guide-link"
+                target="_blank"
+                href="https://propwave.notion.site/Yours-3d6a4452edc946999ad5a8daebcf4cf3"
+            >
+                서비스 이용 안내
+            </a>
             <div className="contact-link-wrapper">
                 {
                     contactLinkList.map((item, index) => (

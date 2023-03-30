@@ -1,11 +1,12 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .navbar {
     background: $GR-0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: 0.3s;
+    @include transition;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -41,7 +42,7 @@
         font-weight: 400;
         @include set-pair-vw(padding, 6.5px, 11px);
         @include set-vw(border-radius, 20px);
-        @include button-active-scale;
+        @include active-scale;
 
         svg {
             @include set-vw(width, 19px);
@@ -56,5 +57,6 @@
         float: right;
         @include set-vw(width, 33px);
         @include set-vw(height, 33px);
+        @include active-scale;
     }
 }

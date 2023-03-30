@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .nft-transfer {
     .title-wrapper {
@@ -20,7 +21,14 @@
         filter: drop-shadow(0px 4px 20px rgba(92, 54, 238, 0.1));
         @include image(140px);
         @include set-vw(border-radius, 15px);
-        @include set-pair-vw(margin, 30px, 0px);
+        @include set-vw(margin-top, 60px);
+    }
+
+    .nft-chain-info {
+        width: fit-content;
+        @include set-pair-vw(margin, 20px, 0px);
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .transfer-preview {
@@ -51,15 +59,9 @@
         justify-content: center;
         @include set-vw(gap, 48px);
 
-        .transfer-icon {
-            @include set-vw(width, 95px);
-            @include set-vw(height, 95px);
-            animation: fly 0.3s forwards;
-        }
-
-        @keyframes fly {
-            0% {  }
-            100% { transform: translate(5vh, -5vh); }
+        .iconify {
+            @include set-vw(width, 60px);
+            @include set-vw(height, 60px);
         }
 
         .transfer-warning {
@@ -70,7 +72,7 @@
             width: -webkit-fill-available;
             text-align: left;
             background-color: $GR-1;
-            @include button-active-scale;
+            @include active-scale;
             @include set-vw(border-radius, 10px);
             @include set-pair-vw(padding, 28px, 16px);
 

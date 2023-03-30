@@ -58,6 +58,7 @@ function PhotoSettings({option, setOption, handlePopup}:photoSettingsType) {
                     className="button"
                     id="purple"
                     onClick={()=>handlePopup("해당 정보로 NFT를 생성하시겠습니까?")}
+                    disabled={!option.length}
                 >
                     설정 마치고 NFT 생성하기
                 </button>

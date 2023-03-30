@@ -8,9 +8,10 @@ type successTypeProp = {
     title:ReactNode;
     buttonText:string;
     buttonAction:Function;
+    children?: JSX.Element;
 }
 
-function Success({ image, title, buttonText, buttonAction }:successTypeProp) {
+function Success({ image, title, buttonText, buttonAction, children }:successTypeProp) {
     const { width, height } = useWindowSize();
 
     return (
@@ -23,7 +24,7 @@ function Success({ image, title, buttonText, buttonAction }:successTypeProp) {
                     { title }
                 </div>
             </div>
-
+            { children }
             <button
                 className="button button--sticky"
                 id="purple"

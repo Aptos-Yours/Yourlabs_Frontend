@@ -116,57 +116,103 @@
             format("truetype");
 }
 
-/* MADEOkineSans */
+/* MADE Okine Sans PERSONAL USE */
 @font-face {
-    font-family: 'MADE Okine Sans PERSONAL USE';
+    font-family: "MADE Okine Sans PERSONAL USE";
     font-weight: 900;
     font-display: swap;
     src: local("MADE Okine Sans PERSONAL USE Black"),
         url("../asset/font/MADEOkineSans/MADEOkineSansPERSONALUSE-Black.otf")
-            format("opentype");
+            format("opentype"),
 }
 
 @font-face {
-    font-family: 'MADE Okine Sans PERSONAL USE';
+    font-family: "MADE Okine Sans PERSONAL USE";
     font-weight: 700;
     font-display: swap;
-    src: local("MADE Okine Sans PERSONAL USE Bold"),
+    src: local("MADE Okine Sans PERSONAL USE Black"),
         url("../asset/font/MADEOkineSans/MADEOkineSansPERSONALUSE-Bold.otf")
-            format("opentype");
+            format("opentype"),
 }
 
 @font-face {
-    font-family: 'MADE Okine Sans PERSONAL USE';
+    font-family: "MADE Okine Sans PERSONAL USE";
     font-weight: 500;
     font-display: swap;
     src: local("MADE Okine Sans PERSONAL USE Medium"),
         url("../asset/font/MADEOkineSans/MADEOkineSansPERSONALUSE-Medium.otf")
-            format("opentype");
+            format("opentype"),
 }
 
 @font-face {
-    font-family: 'MADE Okine Sans PERSONAL USE';
+    font-family: "MADE Okine Sans PERSONAL USE";
     font-weight: 400;
     font-display: swap;
     src: local("MADE Okine Sans PERSONAL USE Regular"),
         url("../asset/font/MADEOkineSans/MADEOkineSansPERSONALUSE-Regular.otf")
-            format("opentype");
+            format("opentype"),
 }
 
 @font-face {
-    font-family: 'MADE Okine Sans PERSONAL USE';
+    font-family: "MADE Okine Sans PERSONAL USE";
     font-weight: 300;
     font-display: swap;
     src: local("MADE Okine Sans PERSONAL USE Light"),
         url("../asset/font/MADEOkineSans/MADEOkineSansPERSONALUSE-Light.otf")
-            format("opentype");
+            format("opentype"),
 }
 
 @font-face {
-    font-family: 'MADE Okine Sans PERSONAL USE';
+    font-family: "MADE Okine Sans PERSONAL USE";
     font-weight: 100;
     font-display: swap;
     src: local("MADE Okine Sans PERSONAL USE Thin"),
         url("../asset/font/MADEOkineSans/MADEOkineSansPERSONALUSE-Thin.otf")
+            format("opentype"),
+}
+
+/* Morena */
+@font-face {
+    font-family: 'Morena';
+    font-weight: 700;
+    font-display: swap;
+    src: local("Morena Bold"),
+        url("../asset/font/Morena/Morena-Bold.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: 'Morena';
+    font-weight: 600;
+    font-display: swap;
+    src: local("Morena Semibold"),
+        url("../asset/font/Morena/Morena-Semibold.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: 'Morena';
+    font-weight: 400;
+    font-display: swap;
+    src: local("Morena"),
+        url("../asset/font/Morena/Morena.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: 'Morena';
+    font-weight: 300;
+    font-display: swap;
+    src: local("Morena Light"),
+        url("../asset/font/Morena/Morena-Light.otf")
+            format("opentype");
+}
+
+@font-face {
+    font-family: 'Morena';
+    font-weight: 200;
+    font-display: swap;
+    src: local("Morena ExtraLight"),
+        url("../asset/font/Morena/Morena-ExtraLight.otf")
             format("opentype");
 }

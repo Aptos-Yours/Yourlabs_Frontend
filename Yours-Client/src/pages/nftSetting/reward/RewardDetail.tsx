@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useNftReward } from "../../../hook/useNftReward";
+import { useNftAdminReward } from "../../../hook/useNftAdminReward";
 import { setShowAlertInfo } from "../../../utils/function/showAlert";
 import { Popup } from "../../../components/popup";
 import MiniHeader from "../../../components/miniHeader/MiniHeader";
@@ -9,7 +9,7 @@ import './RewardDetail.scss';
 function RewardDetail () {
     const navigation = useNavigate();
     const { nftId, rewardId } = useParams();
-    const { rewardInfo, deleteReward } = useNftReward({ nftId: Number(nftId), rewardId: Number(rewardId) });
+    const { rewardInfo, deleteReward } = useNftAdminReward({ nftId: Number(nftId), rewardId: Number(rewardId) });
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 
     const deleteNftReward = async () => {
@@ -37,26 +37,28 @@ function RewardDetail () {
             <MiniHeader
                 title="혜택 관리"
             />
-            <div className="content-wrapper">
-                <h2 className="title">{ rewardInfo?.rewardName }</h2>
-                <div className="description">{ rewardInfo?.description }</div>
-            </div>
+            <div className="show-content-smoothly">
+                <div className="content-wrapper">
+                    <h2 className="title">{ rewardInfo?.rewardName }</h2>
+                    <div className="description">{ rewardInfo?.description }</div>
+                </div>
 
-            <div className="button-wrapper">
-                <button
-                    className="button"
-                    id="black"
-                    onClick={()=>{setShowConfirmModal(true)}}
-                >
-                    삭제
-                </button>
-                <button
-                    className="button"
-                    id="purple"
-                    onClick={()=>{navigation('edit')}}
-                >
-                    수정
-                </button>
+                <div className="button-wrapper">
+                    <button
+                        className="button"
+                        id="black"
+                        onClick={()=>{setShowConfirmModal(true)}}
+                    >
+                        삭제
+                    </button>
+                    <button
+                        className="button"
+                        id="purple"
+                        onClick={()=>{navigation('edit')}}
+                    >
+                        수정
+                    </button>
+                </div>
             </div>
         </div>
         </>

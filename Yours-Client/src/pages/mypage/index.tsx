@@ -1,18 +1,30 @@
-import { useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Transition } from "react-transition-group";
+import { useLocation, useNavigate } from "react-router-dom";
 import useMypageMenu from "./useMypageMenu";
 import NftElem from "../../components/nft/NftElem";
 import RewardElem from "../../components/reward";
+import IntegratedNftContainer from "./integratedNft";
+import WelcomeModal from "./welcomeModal";
+import CompleteQuestModal from "./completeQuestModal";
+import YoursWalletButton from "./YoursWalletButton";
 import { ReactComponent as SearchIcon } from "../../asset/svg/search.svg";
 import './index.scss';
 
 function Mypage() {
+    const { state } = useLocation();
     const navigation = useNavigate();
     const name = useSelector((state: any) => state.userData.name);
-    const { menuDataList, currMenu, setCurrMenu, searchWord, setSearchWord, searchData } = useMypageMenu();
+    const [pastMenu, setPastMenu] = useState('');
+    const { menuDataList, currMenu, setCurrMenu, searchWord, setSearchWord, currMenuData, emptyWord } = useMypageMenu();
 
-    useEffect(()=>{
+    const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+    const [showCompleteQuestModal, setShowCompleteQuestModal] = useState(false);
+
+    useLayoutEffect(()=>{
+        setPastMenu(currMenu)
+
         const selectedMenuX = document.getElementById('selected-menu')?.getBoundingClientRect().x;
         const menuShowBar = document.getElementById('show-selected-menu');
         const initialX = document?.getElementsByClassName('mypage-menu')[0]?.getBoundingClientRect().x;
@@ -21,8 +33,32 @@ function Mypage() {
         
     }, [currMenu])
 
+    useLayoutEffect(()=>{
+        // new user 감지
+        if (state?.newUser) {
+            setShowWelcomeModal(true);
+        }
+
+        if (state?.completeQuest) {
+            setShowCompleteQuestModal(true);
+        }
+        
+    }, [state])
+
     return (
         <div className="mypage">
+            {
+                showWelcomeModal && 
+                <WelcomeModal 
+                    closeModal={()=>{setShowWelcomeModal(false)}}
+                />
+            }
+            {
+                showCompleteQuestModal && 
+                <CompleteQuestModal
+                    closeModal={()=>{setShowCompleteQuestModal(false)}}
+                />
+            }
             <div className="my-profile-wrapper">
                 <span className="my-profile-yours">Sincerely Yours</span>
                 <div className="my-profile-name">{ name }</div>
@@ -32,6 +68,7 @@ function Mypage() {
                 >
                     edit
                 </button>
+                <IntegratedNftContainer />
             </div>
 
             <div className="mypage-menu-wrapper">
@@ -62,24 +99,44 @@ function Mypage() {
                     />
                 </div>
 
-                <div className="mypage-menu-nft-container">
-                {
-                    (searchWord.length ? searchData : menuDataList?.find((menuData:any)=>menuData.type === currMenu)?.data)?.map((content, idx) => (
-                        currMenu !== 'reward'
-                        ? <NftElem 
-                            nftInfo={content}
-                        />
-                        : content.rewards.map((reward:any, idx:number) => (
-                            <RewardElem
-                                nftId={content.id} 
-                                nftName={content.nftName}
-                                reward={reward}
-                            />
-                        ))
-                    ))
-                }
-                </div>
+                <Transition
+                    in={pastMenu === currMenu}
+                    timeout={300}
+                >
+                    {
+                        (state)=>(
+                        <div 
+                            className={`mypage-menu-nft-container ${state}`}
+                        >
+                        {
+                            currMenuData?.length
+                            ? currMenuData.map((content:any, idx:number)=>(
+                                currMenu !== 'reward'
+                                ? <NftElem 
+                                    nftInfo={content}
+                                />
+                                : <RewardElem
+                                    nftId={content.nftId} 
+                                    nftName={content.nftName}
+                                    reward={content}
+                                /> 
+                            ))
+                            : <div className="no-content">
+                                <div className="empty-text">
+                                { 
+                                    searchWord.length
+                                    ? <><h2 className="eng">`{ searchWord }`</h2>로<br/>검색한 결과가 없습니다.</>
+                                    : emptyWord
+                                }
+                                </div>
+                            </div>
+                        }
+                        </div>
+                        )
+                    }
+                </Transition>
             </div>
+            <YoursWalletButton />
         </div>
     )
 }

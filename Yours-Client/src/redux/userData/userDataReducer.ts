@@ -9,6 +9,7 @@ const initialState = {
     profileImage: '',
     phoneNumber: '',
     admin: false,
+    secret: '',
 }
 
 export const userDataReducer = (state = initialState, action : any) => {
@@ -38,6 +39,9 @@ export const userDataReducer = (state = initialState, action : any) => {
           break;
         case ACTION_TYPES.SET_ADMIN:
           resultState.admin = action.data;
+          break;
+        case ACTION_TYPES.SET_SECRET:
+          resultState.secret = action.data;
           break;
       default:
     }

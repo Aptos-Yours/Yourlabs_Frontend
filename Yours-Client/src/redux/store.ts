@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import { alertReducer } from "./alert/alertReducer";
 import { nftReducer } from "./nft/nftReducer";
 import { userDataReducer } from "./userData/userDataReducer";
+import { walletReducer } from "./wallet/walletReducer";
 
 const rootReducer = combineReducers({
     userData: userDataReducer,
     nft: nftReducer,
     alert: alertReducer,
+    wallet: walletReducer,
 })
 
 const middleware = [thunk];

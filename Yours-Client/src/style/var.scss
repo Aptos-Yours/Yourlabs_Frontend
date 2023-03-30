@@ -46,26 +46,12 @@ $vw-viewport: 430;
     word-break: keep-all;
 }
 
-// active
-@mixin button-active-scale($transition-duration: 0.3s, $scale-amount: 0.95) {
-    transition: $transition-duration;
-    transform: scale(1);
-
-    &:active {
-        transform: scale($scale-amount);
-    }
-}
-
-@mixin svg-active-color($color, $transition-duration: 0.3s) {
-    path {
-        transition: $transition-duration;
-    }
-
-    &:active {
-        path {
-            fill: $color;
-        }
-    }
+@mixin transition($transition-duration: 0.3s) {
+    -o-transition: all $transition-duration;
+    -webkit-transition: -webkit-transform $transition-duration;
+    -ms-transition: all $transition-duration;
+    -moz-transition: all $transition-duration;
+    transition: all $transition-duration;
 }
 
 // text
@@ -143,6 +129,11 @@ $vw-viewport: 430;
     -moz-animation: $name $duration $fill-mode;
 }
 
+@mixin hide-modal($animation-duration: 0.5s) {
+    opacity: 1;
+    @include animation(hideModal, $animation-duration, forwards);
+}
+
 @mixin show-modal($animation-duration: 0.5s) {
     opacity: 0;
     @include animation(showModal, $animation-duration, forwards);
@@ -157,6 +148,12 @@ $vw-viewport: 430;
     opacity: 0;
     @include animation(showBounceUp, $animation-duration, forwards);
 }
+
+@mixin show-bounce-down($animation-duration: 0.4s) {
+    opacity: 0;
+    @include animation(showBounceDown, $animation-duration, forwards);
+}
+
 @mixin animation-bounce($animation-duration: 1s) {
     @include animation(bounce, $animation-duration);
 }

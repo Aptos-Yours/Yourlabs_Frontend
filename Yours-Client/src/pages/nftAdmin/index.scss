@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .nftadmin-page {
     text-align: left;
@@ -51,6 +52,7 @@
                     @include H6;
                     @include set-vw(border-radius, 10px);
                     @include set-pair-vw(padding, 10px, 14.5px);
+                    @include active-scale;
                 }
             }
 

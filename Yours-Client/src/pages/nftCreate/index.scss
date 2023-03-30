@@ -6,6 +6,10 @@
         @include set-vw(margin-bottom, 45px);
         @include set-vw(margin-top, 50px);
 
+        .title {
+            line-height: 150%;
+        }
+
         .subtitle {
             margin-bottom: 60px;
             white-space: pre-wrap;
@@ -28,6 +32,10 @@
         bottom: 3vh;
         display: flex;
         @include set-vw(gap, 10px);
+    }
+
+    .chain-select-wrapper {
+        @include set-vw(width, 205px);
     }
 
     .certification-button-wrapper {
@@ -80,6 +88,18 @@
         .photo-description-warning {
             color: $RE;
             @include H5;
+        }
+    }
+
+    .chain-info {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        @include set-vw(gap, 6px);
+
+        img {
+            @include set-vw(width, 28px);
+            @include set-vw(height, 28px);
         }
     }
 

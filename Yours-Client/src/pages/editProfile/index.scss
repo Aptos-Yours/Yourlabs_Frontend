@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .profile-edit-page {
     .profile-edit-content-wrapper {
@@ -24,7 +25,7 @@
             flex-direction: column;
 
             .profile-input-elem {
-                width: 100%;
+                width: -webkit-fill-available;
                 display: flex;
                 align-items: center;
                 border-bottom: 1px solid $GR-2;
@@ -34,21 +35,24 @@
 
                 .input-title {
                     color: $GR-4;
+                    flex-shrink: 0;
                 }
 
                 .input {
                     text-align: left;
                     flex-grow: 1;
                     @include H5;
+                    @include set-vw(width, 100px);
                 }
 
                 button {
                     background-color: $BK;
                     color: white;
+                    flex-shrink: 0;
                     @include set-vw(width, 78px);
                     @include set-vw(height, 37px);
                     @include set-vw(border-radius, 10px);
-                    @include button-active-scale;
+                    @include active-scale;
                 }
             }
         }

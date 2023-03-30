@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MiniHeader from "../../../components/miniHeader/MiniHeader";
 import { Popup } from "../../../components/popup";
-import { useNftReward } from "../../../hook/useNftReward";
+import { useNftAdminReward } from "../../../hook/useNftAdminReward";
 import { setShowAlertInfo } from "../../../utils/function/showAlert";
 import RewardInfoForm from "./RewardInfoForm";
 
 function RewardEdit() {
     const navigation = useNavigate();
     const { nftId, rewardId } = useParams();
-    const { rewardInfo, editReward } = useNftReward({ nftId: Number(nftId), rewardId: Number(rewardId) });
+    const { rewardInfo, editReward } = useNftAdminReward({ nftId: Number(nftId), rewardId: Number(rewardId) });
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
 

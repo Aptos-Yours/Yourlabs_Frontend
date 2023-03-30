@@ -1,4 +1,4 @@
-import { ReactComponent as LoadingIcon } from '../../asset/svg/loading.svg';
+import { Icon } from '@iconify/react';
 
 type transferLoadingProp = {
     nftName:string;
@@ -7,7 +7,11 @@ type transferLoadingProp = {
 function TransferLoading({ nftName }:transferLoadingProp) {
     return (
         <div className="trasfer-status-container">
-            <LoadingIcon className="loading-icon"/>
+            <Icon 
+                icon="line-md:loading-alt-loop" 
+                width="60"
+                color="#ed5f8a"
+            />
             <div className="transfer-status-wrapper">
                 <h2 className="eng">{ nftName }</h2>
                 <h3>NFT를<br/>전송하는 중이에요</h3>

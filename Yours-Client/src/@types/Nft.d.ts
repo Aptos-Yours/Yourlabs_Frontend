@@ -8,7 +8,13 @@ declare module "NftType" {
         numberOfRewards: number;
         rewards: rewardType[];
         authType?: 1|2;
+        chainType?: 'Ethereum' | 'Polygon' | 'Klaytn' | 'Solana' | 'Aptos';
         options?: string;
+        isDeployed?: boolean;
+        isEdited?: boolean;
+        nftAddress?: string;
+        createdAt?: string;
+        updatedAt?: string;
     }
     export interface NftReward {
         id: number;

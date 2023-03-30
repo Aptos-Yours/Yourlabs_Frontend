@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import usePhoneAuthentication from "../../../hook/usePhoneAuthentication";
-import Modal from "../../../components/modal/Modal";
+import { useState } from "react";
 import { timeToString } from "../../../utils/function/time";
-import { ReactComponent as CheckIcon } from "../../../asset/svg/check-circle.svg";
-import { ReactComponent as CloseIcon } from "../../../asset/svg/close-circle.svg";
-import UserApi from "../../../apis/UserApi";
 import { setShowAlertInfo } from "../../../utils/function/showAlert";
 import useEmailAuthentication from "../../../hook/useEmailAuthentication";
+import Modal from "../../../components/modal/Modal";
+import UserApi from "../../../apis/UserApi";
+import { ReactComponent as CheckIcon } from "../../../asset/svg/check-circle.svg";
+import { ReactComponent as CloseIcon } from "../../../asset/svg/close-circle.svg";
 
 type emailEditModalProps = {
     closeModal: () => void;
@@ -55,6 +54,7 @@ function EmailEditModal({ closeModal }:emailEditModalProps) {
                             type="email"
                             placeholder="변경할 이메일 입력"
                             value={email}
+                            autoFocus={true}
                             onChange={(e)=>{setEmail(e.currentTarget.value)}}
                         />
                         <button

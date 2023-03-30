@@ -31,3 +31,7 @@ export const setPhoneNumber = (phoneNumber : string) => {
 export const setAdmin = (admin : boolean) => {
     return {type: ACTION_TYPES.SET_ADMIN, data: admin};
 }
+
+export const setSecret = (secret : string) => {
+    return {type: ACTION_TYPES.SET_SECRET, data: secret};
+}

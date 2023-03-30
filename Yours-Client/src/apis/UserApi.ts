@@ -1,6 +1,8 @@
 import { get, patch, post } from './AxiosCreate';
 import store from '../redux/store';
-import { setAuth, setEmail, setId, setName, setPhoneNumber, setProfileImage } from '../redux/userData/userDataAction';
+import { setAuth, setEmail, setId, setName, setPhoneNumber, setProfileImage, setSecret } from '../redux/userData/userDataAction';
+import { setAptosWallet, setEthereumWallet, setKlaytnWallet, setPolygonWallet, setSolanaWallet } from '../redux/wallet/walletAction';
+import _ from 'lodash';
 
 type userType = {
     id:number,
@@ -10,6 +12,7 @@ type userType = {
     email:string,
     phoneNumber:string,
     social?:string,
+    secret:string,
 }
 
 class UserApi {
@@ -55,13 +58,15 @@ class UserApi {
         store.dispatch(setId(user.id));
         store.dispatch(setEmail(user.email));
         store.dispatch(setPhoneNumber(user.phoneNumber));
+        store.dispatch(setSecret(user.secret));
         store.dispatch(setAuth(true));
     }
 
     signup = async (newUserData:object) => {
         const res = await post('auth/signup', newUserData);
-        this.setToken(res.data.accessToken, res.data.refreshToken);
+        this.setToken(res.data.data.accessToken, res.data.data.refreshToken);
         await this.getSetUserInfo();
+        await this.getWallets();
         return res.data;
     }
 
@@ -121,6 +126,40 @@ class UserApi {
     editUserProfileImage = async (profileImgFormdata:any) => {
         const res = await patch(`user/profile/photo`, profileImgFormdata);
         store.dispatch(setProfileImage(res.data.data.profileImage));
+        return res.data.data;
+    }
+
+    editSecret = async (secret:string) => {
+        const res = await patch(`user/secret`, {
+            secret: secret
+        });
+        store.dispatch(setSecret(secret));
+        return res.data.data;
+    }
+
+    getWallets = async () => {
+        const res = await get(`user/wallet`);
+        const wallets = res.data.data;
+        store.dispatch(setEthereumWallet(wallets.find((wallet:any) => wallet.chainType === 'Ethereum')?.walletAddress));
+        store.dispatch(setPolygonWallet(wallets.find((wallet:any) => wallet.chainType === 'Polygon')?.walletAddress));
+        store.dispatch(setKlaytnWallet(wallets.find((wallet:any) => wallet.chainType === 'Klaytn')?.walletAddress));
+        store.dispatch(setSolanaWallet(wallets.find((wallet:any) => wallet.chainType === 'Solana')?.walletAddress));
+        store.dispatch(setAptosWallet(wallets.find((wallet:any) => wallet.chainType === 'Aptos')?.walletAddress));
+        return wallets;
+    }
+
+    // wallet 관련 - quest
+    getUserCompletedQuest = async () => {
+        const res = await get(`user/quest`);
+        return res.data.data.isQuest;
+    }
+
+    completeQuest = async () => {
+        const res = await patch(`user/quest`);
+    }
+
+    isYoursWalletAddress = async (walletAddress:string) => {
+        const res = await get(`user/yours?address=${walletAddress}`);
         return res.data.data;
     }
 }

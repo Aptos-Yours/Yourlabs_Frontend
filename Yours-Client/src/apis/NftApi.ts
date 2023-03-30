@@ -1,4 +1,4 @@
-import { addCreateNft, setCreateNftIdList, setOwnNftIdList, setTransferNftIdList } from '../redux/nft/nftAction';
+import { addCreateNft, addTransferNft, setCreateNftIdList, setIntegratedNftList, setOwnNftIdList, setTransferNftIdList, addIntegratedNft } from '../redux/nft/nftAction';
 import { destroy, get, patch, post } from './AxiosCreate';
 import store from '../redux/store';
 
@@ -88,6 +88,17 @@ class NFTApi {
         const res = await post(`nft/${nftId}/transfer`, {
             walletAddress: address
         });
+        store.dispatch(addTransferNft(nftId));
+        return res.data.data;
+    }
+
+    deployNft = async (nftId:number) => {
+        const res = await post(`nft/publish`, { nftId: nftId });
+        return res.data.data;
+    }
+
+    editDeployNft = async (nftId:number) => {
+        const res = await patch(`nft/publish`, { nftId: nftId });
         return res.data.data;
     }
 
@@ -117,6 +128,41 @@ class NFTApi {
     deleteNftReward = async (nftId:number, rewardId:number) => {
         const res = await destroy(`nft/${nftId}/${rewardId}`);
         return res.data;
+    }
+
+    // integrated nft 관련
+    getIntegratedAvailableNftList = async (chain:string) => {
+        const res = await get(`nft/integrated/check?chainType=${chain}`);
+        return res.data.data;
+    }
+
+    createIntegratedNft = async (chainType:string, nftIdArray:number[]) => {
+        const res = await post(`nft/integrated`, {
+            nftIdArray: nftIdArray,
+            chainType: chainType
+        });
+        const nftInfo = res.data.data;
+        store.dispatch(addIntegratedNft({ integratedNftId: nftInfo.id, chainType: nftInfo.chainType }));
+        return res.data.data;
+    }
+
+    updateIntegratedNft = async (integratedNftId:number, nftIdArray:number[]) => {
+        const res = await patch(`nft/integrated`, {
+            integratedNftId: integratedNftId,
+            nftIdArray: nftIdArray
+        });
+        return res.data.data;
+    }
+
+    getIntegratedNftDetail = async (nftId:number) => {
+        const res = await get(`nft/integrated/detail?id=${nftId}`);
+        return res.data.data;
+    }
+
+    getUserIntegratedNftList = async () => {
+        const res = await get(`nft/integrated`);
+        store.dispatch(setIntegratedNftList(res.data.data));
+        return res.data.data;
     }
 }
 export default NFTApi;

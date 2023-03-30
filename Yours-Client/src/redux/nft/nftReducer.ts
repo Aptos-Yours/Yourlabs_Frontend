@@ -5,6 +5,7 @@ const initialState = {
   ownNftIdList: [],
   createNftIdList: [],
   transferNftIdList: [],
+  integratedNftList: [],
 }
 
 export const nftReducer = (state = initialState, action : any) => {
@@ -20,11 +21,20 @@ export const nftReducer = (state = initialState, action : any) => {
       case ACTION_TYPES.SET_TRANSFER_NFT_LIST:
         resultState.transferNftIdList = action.data;
         break;
+      case ACTION_TYPES.SET_INTEGRATED_NFT_LIST:
+        resultState.integratedNftList = action.data;
+        break;
       case ACTION_TYPES.ADD_OWN_NFT:
         resultState.ownNftIdList = [...resultState.ownNftIdList, action.data];
         break;
       case ACTION_TYPES.ADD_CREATE_NFT:
         resultState.createNftIdList = [...resultState.createNftIdList, action.data];
+        break;
+      case ACTION_TYPES.ADD_TRANSFER_NFT:
+        resultState.createNftIdList = [...resultState.transferNftIdList, action.data];
+        break;
+      case ACTION_TYPES.ADD_INTEGRATED_NFT:
+        resultState.integratedNftList = [...resultState.integratedNftList, action.data];
         break;
       default:
     }

@@ -59,6 +59,13 @@
                 display: flex;
                 @include set-vw(gap, 10px);
 
+                .input-text {
+                    width: -webkit-fill-available;
+                    flex-shrink: 1;
+                    flex-grow: 1;
+                    @include set-vw(width, 100px);
+                }
+
                 .button {
                     min-width: max-content;
                     padding: 0 !important;
@@ -111,7 +118,7 @@
                         @include set-vw(height, 24px);
 
                         path {
-                            transition: 0.3s;
+                            @include transition;
                         }
 
                         &#checked path {

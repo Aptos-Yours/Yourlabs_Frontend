@@ -1,21 +1,23 @@
-import transferImg from '../../asset/image/transfer.png';
+import { Icon } from '@iconify/react';
+
 
 type transferLoadingProp = {
     nftName:string;
+    transactionExplorerUrl: string | undefined;
     transactionId:string;
 }
 
-function TransferComplete({ nftName, transactionId }:transferLoadingProp) {
+function TransferComplete({ nftName, transactionExplorerUrl, transactionId }:transferLoadingProp) {
     return (
         <div className="trasfer-status-container">
-            <img className="transfer-icon" src={transferImg}/>
+            <Icon icon="line-md:chevron-down-circle" color="#ed5f8a" width="60" />
             <div className="transfer-status-wrapper">
                 <h2 className="eng">{ nftName }</h2>
                 <h3>NFT를<br/>전송했어요</h3>
             </div>
 
             <div className="trasfer-transaction-wrapper"
-                onClick={()=>{window.open(`https://goerli.etherscan.io/tx/${transactionId}`)}}
+                onClick={()=>{window.open(`${transactionExplorerUrl}/${transactionId}`)}}
             >
                 <h4 className="transfer-transaction-title eng">Transaction</h4>
                 <div className="transfer-transaction-id">

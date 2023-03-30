@@ -1,29 +1,34 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { fileToUrlAndFormData } from "../../utils/function/imgInputHandler";
+import Select from "../../components/select/Select";
+import chainList from "../../utils/data/chainList";
 import { ReactComponent as Camera } from "../../asset/svg/camera.svg";
 
 type setBadgeInfoProps = {
-    badgeName: string,
-    setBadgeName: (badgeName: string) => void,
-    badgeImgUrl: string,
-    setBadgeImgUrl: (badgeImgUrl: string) => void,
-    setBadgeImgFormData: (badgeImgFormData: FormData) => void,
-    badgeDescription: string,
-    setBadgeDescription: (badgeDescription: string) => void,
+    nftName: string,
+    setNftName: (nftName: string) => void,
+    nftImgUrl: string,
+    setNftImgUrl: (nftImgUrl: string) => void,
+    setNftImgFormData: (nftImgFormData: FormData) => void,
+    nftDescription: string,
+    setNftDescription: (nftDescription: string) => void,
+    nftChain: string,
+    setNftChain: (nftChain: string) => void,
     next: () => void,
 }
 
-function SetBadgeInfo({ badgeName, setBadgeName, badgeImgUrl, setBadgeImgUrl, setBadgeImgFormData, badgeDescription, setBadgeDescription, next }:setBadgeInfoProps) {
+function SetBadgeInfo({ nftName, setNftName, nftImgUrl, setNftImgUrl, setNftImgFormData, nftDescription, setNftDescription, nftChain, setNftChain, next }:setBadgeInfoProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const titleInfoList = [
         { page: 1, title: "NFT 이름을 알려주세요", description: "NFT의 이름으로 표기 될 예정이에요." },
         { page: 2, title: "NFT 이미지를 첨부해주세요", description: "지원되는 파일 형식: JPG, PNG/ 최대 크기: 50mb" },
         { page: 3, title: "NFT에 대해 설명해주세요", description: "NFT의 설명으로 표기 될 예정이에요." },
+        { page: 4, title: "체인을 선택해주세요", description: "어떤 체인 위에 NFT를 생성할 지 선택해주세요." }
     ]
     const [page, setPage] = useState(1);
     const [isValidInput, setIsValidInput] = useState(false);
-    const badgeDescriptionMaxLen = 200;
+    const nftDescriptionMaxLen = 200;
 
     useEffect(()=>{
         let _pageMode = searchParams.get('pageMode');
@@ -49,25 +54,42 @@ function SetBadgeInfo({ badgeName, setBadgeName, badgeImgUrl, setBadgeImgUrl, se
     useEffect(()=>{
         switch (page) {
             case 1:
-                setIsValidInput(!!(badgeName.length));
+                setIsValidInput(!!(nftName.length));
                 break;
             case 2:
-                setIsValidInput(!!badgeImgUrl.length);
+                setIsValidInput(!!nftImgUrl.length);
                 break;
             case 3:
-                setIsValidInput(!!badgeDescription.length);
+                setIsValidInput(!!nftDescription.length);
+                break;
+            case 4:
+                setIsValidInput(!!nftChain);
                 break;
             default:
         }
-    }, [page, badgeName, badgeImgUrl, badgeDescription])
+    }, [page, nftName, nftImgUrl, nftDescription, nftChain])
 
     return (
     <>
         <div className="title-wrapper">
-            <h2 className="title">{titleInfoList[page-1].title} ({ page }/{titleInfoList.length})</h2>
+            <h2 className="title">{titleInfoList[page-1].title} ({ page }/{titleInfoList.length + 1})</h2>
             <h4 className="subtitle">{ titleInfoList[page-1].description }</h4>
         </div>
         <div className="nft-create-info-form">
+        {
+            !!(page >= 4) &&
+            <div className="chain-select-wrapper">
+                <Select 
+                    placeholder={"Select Source Chain"}
+                    value={nftChain}
+                    setValue={setNftChain}
+                    optionList={chainList}
+                    optionIconKey="logo"
+                    optionNameKey="name"
+                    optionValueKey="name"
+                />
+            </div>
+        }
         {
             !!(page >= 3) &&
             <div className="input-box-wrapper">
@@ -75,18 +97,18 @@ function SetBadgeInfo({ badgeName, setBadgeName, badgeImgUrl, setBadgeImgUrl, se
                 <div className="input-textarea">
                     <textarea 
                         id="badge-description-input"
-                        value={badgeDescription}
-                        maxLength={badgeDescriptionMaxLen}
+                        value={nftDescription}
+                        maxLength={nftDescriptionMaxLen}
                         rows={4}
                         placeholder="NFT 설명을 입력해 주세요."
-                        onChange={(e)=>{setBadgeDescription(e.currentTarget.value)}}
+                        onChange={(e)=>{setNftDescription(e.currentTarget.value)}}
                     />
                 </div>
                 <div className="input-content-length">
-                    <span id={badgeDescription.length >= badgeDescriptionMaxLen ? "max" : (badgeDescription.length ? "active" : "")}>
-                        { badgeDescription.length }
+                    <span id={nftDescription.length >= nftDescriptionMaxLen ? "max" : (nftDescription.length ? "active" : "")}>
+                        { nftDescription.length }
                     </span>
-                    /{badgeDescriptionMaxLen}
+                    /{nftDescriptionMaxLen}
                 </div>
             </div>
         }
@@ -101,16 +123,16 @@ function SetBadgeInfo({ badgeName, setBadgeName, badgeImgUrl, setBadgeImgUrl, se
                     type="file"
                     accept="image/*"
                     disabled={page !== 2}
-                    onChange={(e)=>{fileToUrlAndFormData(e, setBadgeImgUrl, setBadgeImgFormData, 'image')}}
+                    onChange={(e)=>{fileToUrlAndFormData(e, setNftImgUrl, setNftImgFormData, 'image')}}
                 />
                 <label htmlFor="badge-image-input" className="input-image">
                     <div 
                         className="badge-image-input-button"
-                        id={badgeImgUrl ? "image-uploaded" : ""}
+                        id={nftImgUrl ? "image-uploaded" : ""}
                     >
                         <Camera />
                     </div>
-                    { badgeImgUrl && <img src={badgeImgUrl}/> }
+                    { nftImgUrl && <img src={nftImgUrl}/> }
                 </label> 
             </div>
         }
@@ -122,9 +144,9 @@ function SetBadgeInfo({ badgeName, setBadgeName, badgeImgUrl, setBadgeImgUrl, se
                 className="input-text"
                 type="text"
                 disabled={page !== 1}
-                value={badgeName}
+                value={nftName}
                 placeholder="NFT 이름을 입력해 주세요."
-                onChange={(e)=>{setBadgeName(e.currentTarget.value)}}
+                onChange={(e)=>{setNftName(e.currentTarget.value)}}
             />
         </div>
 

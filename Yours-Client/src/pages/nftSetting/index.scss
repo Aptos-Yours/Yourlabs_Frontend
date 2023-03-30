@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/active.scss';
 
 .nft-setting {
 
@@ -36,7 +37,7 @@
             background-color: $BK;
             @include set-vw(border-radius, 15px);
             @include set-pair-vw(padding, 32px, 0px);
-            @include button-active-scale;
+            @include active-scale;
         }
     }
 }

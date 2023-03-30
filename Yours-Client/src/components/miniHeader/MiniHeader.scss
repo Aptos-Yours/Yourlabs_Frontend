@@ -1,4 +1,5 @@
 @import '../../style/var.scss';
+@import '../../style/transform.scss';
 
 .mini-header-container {
     width: -webkit-fill-available;
@@ -14,6 +15,12 @@
         width: auto;
         position: absolute;
         left: 0;
+        cursor: pointer;
+        @include transition(0.4s);
         @include set-vw(height, 20px);
+
+        &:active {
+            @include translate(-5px, 0);
+        }
     }
 }

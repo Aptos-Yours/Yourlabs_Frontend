@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { StatusTypes } from 'react-async';
 import { useDispatch, useSelector } from 'react-redux';
 import positiveImg from '../../asset/image/heart-face.png';
 import negativeImg from '../../asset/image/skull.png';

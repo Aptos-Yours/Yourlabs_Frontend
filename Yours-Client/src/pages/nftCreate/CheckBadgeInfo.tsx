@@ -1,13 +1,13 @@
-import { ReactComponent as Klaytn } from "../../asset/svg/klaytn.svg";
 import { ReactComponent as NotificationIcon } from "../../asset/svg/triangle-right.svg";
 
 type checkBadgeInfoProps = {
     badgeInfo: any,
+    chainInfo: any,
     prev: () => void,
     next: () => void,
 }
 
-function CheckBadgeInfo ({ badgeInfo, prev, next }: checkBadgeInfoProps) {
+function CheckBadgeInfo ({ badgeInfo, chainInfo, prev, next }: checkBadgeInfoProps) {
 
     return (
         <div className="check-badge-info">
@@ -33,9 +33,10 @@ function CheckBadgeInfo ({ badgeInfo, prev, next }: checkBadgeInfoProps) {
                 </div>
                 <div className="input-box-wrapper">
                     <div className="input-label">블록체인</div>
-                    <div className="input-text" id="check"><Klaytn /> Klaytn</div>
-                </div>
-                <div className="input-box-wrapper">
+                    <h3 className="chain-info">
+                        <img src={chainInfo.logo}/>
+                        <h3>{ chainInfo.name }</h3>
+                    </h3>
                     <div className="check-notice" id="check">
                         <NotificationIcon />
                         <div className="check-notice-text">
